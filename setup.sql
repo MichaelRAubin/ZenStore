@@ -16,4 +16,7 @@
 
 --     PRIMARY KEY(id)
 -- )
+-- NOTE - need to create an orders table and a product_orders table
+-- Need Foreign Key in product_reviews back to products
 
+-- Need 2 Foreign Key product id & order id
