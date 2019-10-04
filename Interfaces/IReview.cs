@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ZenStore.Interfaces
 {
     public interface IReview
@@ -5,6 +7,9 @@ namespace ZenStore.Interfaces
         string Id { get; set; }
         string Name { get; set; }
         string Description { get; set; }
+
+        [MinLength(1)]
+        [MaxLength(5)]
         double Rating { get; set; }
         string ProductId { get; set; }
     }

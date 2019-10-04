@@ -11,7 +11,7 @@ namespace ZenStore.Data
 
         public IEnumerable<Product> GetAll()
         {
-            return;
+            return _db.Query<Product>("SELECT * FROM products");
         }
 
         public Product Create(Product productData)
@@ -32,15 +32,26 @@ namespace ZenStore.Data
             );
         }
 
-        public Product EditProductById(string id)
+        internal bool SaveProduct(Product product)
         {
-
-            return;
+            var nRows = _db.Execute(@"
+                UPDATE products SET
+                name = @Name,
+                description = @Description,
+                price = @Price
+                WHERE id = @Id
+                ", product);
+            return nRows == 1;
         }
 
         internal bool DeleteProduct(string id)
         {
-            return;
+            var success = _db.Execute("DELETE FROM products WHERE id = @id", new { id });
+            if (success == 1)
+            {
+                return true;
+            }
+            return false;
         }
 
         public ProductsRepository(IDbConnection db)
