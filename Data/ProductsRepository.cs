@@ -24,6 +24,13 @@ namespace ZenStore.Data
             return productData;
         }
 
+        public Product GetProductByName(string name)
+        {
+            return _db.QueryFirstOrDefault<Product>(
+                "SELECT * FROM products WHERE name = @name",
+                new { name }
+            );
+        }
         public Product GetProductById(string id)
         {
             return _db.QueryFirstOrDefault<Product>(

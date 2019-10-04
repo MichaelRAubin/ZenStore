@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ZenStore.Models;
+using ZenStore.Services;
 
 namespace ZenStore.Controllers
 {
@@ -8,19 +10,77 @@ namespace ZenStore.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private readonly ProductsService _ps;
+
         [HttpGet]
         public ActionResult<IEnumerable<Product>> Get()
         {
-            return Ok(new List<Product>()
+            return _ps.GetProducts();
+        }
+        [HttpGet("{id}")]
+
+        public ActionResult<Product> Get(string id)
+        {
+            try
             {
-                new Product()
-                {
-                    Id = "123",
-                    Name = "Fake Product",
-                    Description = "A Fake Product",
-                    Price = 100.99m
-                }
-            });
+                Product product = _ps.GetProductById(id);
+                return Ok(product);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult<Product> Post([FromBody] Product productData)
+        {
+            try
+            {
+                Product myProduct = _ps.AddProduct(productData);
+                return Created("api/products/" + myProduct.Id, myProduct);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult<Product> Put(string id, [FromBody] Product productData)
+        {
+            try
+            {
+                productData.Id = id;
+                var product = _ps.EditProduct(productData);
+                return Ok(product);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<Product> Delete(string id)
+        {
+            try
+            {
+                var product = _ps.DeleteProduct(id);
+                return Ok(product);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+
+        public ProductsController(ProductsService ps)
+        {
+            _ps = ps;
         }
     }
+
 }
