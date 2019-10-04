@@ -15,7 +15,7 @@ namespace ZenStore.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Product>> Get()
         {
-            return _ps.GetProducts();
+            return Ok(_ps.GetProducts());
         }
         [HttpGet("{id}")]
 

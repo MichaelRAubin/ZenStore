@@ -20,8 +20,6 @@
 --     PRIMARY KEY(id)
 -- );
 
--- Need Foreign Key in product_reviews back to products
-
 -- CREATE TABLE IF NOT EXISTS orders(
 --     id VARCHAR(255) NOT NULL,
 --     name VARCHAR(255) NOT NULL,
@@ -48,3 +46,5 @@
 -- );
 
 --need to add join statements - return a list of orders in <>
+
+    

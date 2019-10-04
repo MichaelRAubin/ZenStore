@@ -36,6 +36,10 @@ namespace ZenStore
             services.AddScoped<IDbConnection>(o => CreateDbConnection());
             services.AddTransient<ProductsRepository>();
             services.AddTransient<ProductsService>();
+            services.AddTransient<ReviewsRepository>();
+            services.AddTransient<ReviewsService>();
+            services.AddTransient<OrdersRepository>();
+            services.AddTransient<OrdersService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
