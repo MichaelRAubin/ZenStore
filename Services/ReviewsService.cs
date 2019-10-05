@@ -41,15 +41,15 @@ namespace ZenStore.Services
             return review;
         }
 
-        public IEnumerable<Review> GetProductReviews(string productid)
-        {
-            var reviews = _repo.GetReviews(productid);
-            if (reviews == null)
-            {
-                throw new Exception("Bad Product ID");
-            }
-            return reviews;
-        }
+        // public IEnumerable<Review> GetProductReviews(string productid)
+        // {
+        //     var reviews = _repo.GetReviews(productid);
+        //     if (reviews == null)
+        //     {
+        //         throw new Exception("Bad Product ID");
+        //     }
+        //     return reviews;
+        // }
 
         public ReviewsService(ReviewsRepository repo)
         {

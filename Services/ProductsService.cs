@@ -60,7 +60,7 @@ namespace ZenStore.Services
             return product;
         }
 
-        public ProductsService(ProductsRepository repo,)
+        public ProductsService(ProductsRepository repo)
         {
             _repo = repo;
 

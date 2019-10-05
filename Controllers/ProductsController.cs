@@ -33,20 +33,6 @@ namespace ZenStore.Controllers
             }
         }
 
-        // [HttpGet("{id}/reviews")]
-        // public ActionResult<Review> GetReview(string id)
-        // {
-        //     try
-        //     {
-        //         List<Review> review = _rs.GetProductReviews(id);
-        //         return Ok(review);
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return BadRequest(e.Message);
-        //     }
-        // }
-
         [HttpPost]
         public ActionResult<Product> Post([FromBody] Product productData)
         {
