@@ -8,8 +8,7 @@ namespace ZenStore.Interfaces
         string Name { get; set; }
         string Description { get; set; }
 
-        [MinLength(1)]
-        [MaxLength(5)]
+        [Range(.5, 5)]
         double Rating { get; set; }
         string ProductId { get; set; }
     }

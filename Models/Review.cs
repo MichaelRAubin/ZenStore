@@ -9,8 +9,7 @@ namespace ZenStore.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        [MinLength(1)]
-        [MaxLength(5)]
+        [Range(.5, 5)]
         public double Rating { get; set; }
         public string ProductId { get; set; }
     }
