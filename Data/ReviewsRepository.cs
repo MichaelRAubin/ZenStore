@@ -39,13 +39,13 @@ namespace ZenStore.Data
             );
         }
 
-
-
-
-
-
-
-
+        // public List<Review> GetReviews(string id)
+        // {
+        //     return _db.Query<Review>(
+        //       "SELECT * FROM product_reviews WHERE id = @ProductId",
+        //       new { id }
+        //     );
+        // }
 
         public ReviewsRepository(IDbConnection db)
         {

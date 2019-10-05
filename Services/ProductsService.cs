@@ -9,7 +9,7 @@ namespace ZenStore.Services
     public class ProductsService
     {
         private readonly ProductsRepository _repo;
-        private readonly ReviewsService _rs;
+
 
         public List<Product> GetProducts()
         {
@@ -18,11 +18,6 @@ namespace ZenStore.Services
 
         public Product AddProduct(Product productData)
         {
-            // var exists = _repo.GetProductByName(productData.Name);
-            // if (exists != null)
-            // {
-            //     throw new Exception("This product already exists.");
-            // }
             productData.Id = Guid.NewGuid().ToString();
             _repo.Create(productData);
             return productData;
@@ -65,10 +60,10 @@ namespace ZenStore.Services
             return product;
         }
 
-        public ProductsService(ProductsRepository repo, ReviewsService rs)
+        public ProductsService(ProductsRepository repo,)
         {
             _repo = repo;
-            _rs = rs;
+
         }
     }
 }

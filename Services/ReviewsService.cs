@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ZenStore.Data;
 using ZenStore.Models;
 
@@ -38,6 +39,16 @@ namespace ZenStore.Services
                 throw new Exception("Could not edit review");
             }
             return review;
+        }
+
+        public IEnumerable<Review> GetProductReviews(string productid)
+        {
+            var reviews = _repo.GetReviews(productid);
+            if (reviews == null)
+            {
+                throw new Exception("Bad Product ID");
+            }
+            return reviews;
         }
 
         public ReviewsService(ReviewsRepository repo)

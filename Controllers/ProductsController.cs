@@ -11,6 +11,7 @@ namespace ZenStore.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ProductsService _ps;
+        private readonly ReviewsService _rs;
 
         [HttpGet]
         public ActionResult<IEnumerable<Product>> Get()
@@ -31,6 +32,20 @@ namespace ZenStore.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        // [HttpGet("{id}/reviews")]
+        // public ActionResult<Review> GetReview(string id)
+        // {
+        //     try
+        //     {
+        //         List<Review> review = _rs.GetProductReviews(id);
+        //         return Ok(review);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         return BadRequest(e.Message);
+        //     }
+        // }
 
         [HttpPost]
         public ActionResult<Product> Post([FromBody] Product productData)
@@ -77,9 +92,10 @@ namespace ZenStore.Controllers
 
 
 
-        public ProductsController(ProductsService ps)
+        public ProductsController(ProductsService ps, ReviewsService rs)
         {
             _ps = ps;
+            _rs = rs;
         }
     }
 
