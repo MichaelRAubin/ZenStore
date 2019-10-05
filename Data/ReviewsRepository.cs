@@ -39,6 +39,13 @@ namespace ZenStore.Data
             );
         }
 
+        public IEnumerable<Review> GetReviewsByProductId(string id)
+        {
+            return _db.Query<Review>(
+                "SELECT * FROM product_reviews WHERE productid = @id",
+                new { id }
+            );
+        }
         public ReviewsRepository(IDbConnection db)
         {
             _db = db;

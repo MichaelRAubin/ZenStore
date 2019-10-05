@@ -33,6 +33,20 @@ namespace ZenStore.Controllers
             }
         }
 
+        [HttpGet("{id}/reviews")]
+        public ActionResult<IEnumerable<Review>> GetReviews(string id)
+        {
+            try
+            {
+                return Ok(_rs.GetProductReviews(id));
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpPost]
         public ActionResult<Product> Post([FromBody] Product productData)
         {
@@ -75,8 +89,6 @@ namespace ZenStore.Controllers
                 return BadRequest(e.Message);
             }
         }
-
-
 
         public ProductsController(ProductsService ps, ReviewsService rs)
         {
