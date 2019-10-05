@@ -19,7 +19,7 @@ namespace ZenStore.Data
             return orderData;
         }
 
-        internal bool EditOrder(Order Order)
+        internal bool SaveOrder(Order Order)
         {
             var nRows = _db.Execute(@"
             UPDATE orders SET
@@ -33,18 +33,14 @@ namespace ZenStore.Data
             return nRows == 1;
         }
 
-        // public Order ShipOrderById(string id)//needs to be a bool
-        // {
-        //     return;
-        // }
+        public Order GetOrderById(string id)
+        {
+            return _db.QueryFirstOrDefault<Order>(
+              "SELECT * FROM orders WHERE id = @id",
+                new { id }
+            );
+        }
 
-        // public Order CancelOrderById(string id)//needs to be a bool
-        // {
-        //     return
-        // }
-
-
-        //TODO may need to add cancel and shipped bool properties
 
         public OrdersRepository(IDbConnection db)
         {

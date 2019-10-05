@@ -15,8 +15,37 @@ namespace ZenStore.Services
             return orderData;
         }
 
+        public Order ShipOrder(Order orderData)
+        {
+            var order = _repo.GetOrderById(orderData.Id);
+            if (order == null || orderData.Shipped != false || orderData.Canceled != false) { throw new Exception("Order cannot be shipped"); }
+            orderData.Shipped = true;
+            orderData.OrderOut = DateTime.Now;
 
+            bool success = _repo.SaveOrder(order);
+            if (!success)
+            {
+                throw new Exception($"Unable to ship order.");
 
+            }
+            return order;
+        }
+
+        public Order CancelOrder(Order orderData)
+        {
+            var order = _repo.GetOrderById(orderData.Id);
+            if (order == null || orderData.Shipped != false || orderData.Canceled != false) { throw new Exception("Order cannot be canceled"); }
+            orderData.Canceled = true;
+            orderData.OrderCanceledAt = DateTime.Now;
+
+            bool success = _repo.SaveOrder(order);
+            if (!success)
+            {
+                throw new Exception($"Unable to cancel order.");
+
+            }
+            return order;
+        }
 
         public OrdersService(OrdersRepository repo)
         {

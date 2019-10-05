@@ -12,26 +12,6 @@ namespace ZenStore.Controllers
     {
         private readonly OrdersService _os;
 
-        // [HttpGet]
-        // public ActionResult<IEnumerable<Product>> Get()
-        // {
-        //     return Ok(_ps.GetProducts());
-        // }
-        // [HttpGet("{id}")]
-
-        // public ActionResult<Product> Get(string id)
-        // {
-        //     try
-        //     {
-        //         Product product = _ps.GetProductById(id);
-        //         return Ok(product);
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return BadRequest(e.Message);
-        //     }
-        // }
-
         [HttpPost]
         public ActionResult<Order> Post([FromBody] Order orderData)
         {
@@ -46,35 +26,37 @@ namespace ZenStore.Controllers
             }
         }
 
-        // [HttpPut("{id}")]
-        // public ActionResult<Product> Put(string id, [FromBody] Product productData)
-        // {
-        //     try
-        //     {
-        //         productData.Id = id;
-        //         var product = _ps.EditProduct(productData);
-        //         return Ok(product);
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return BadRequest(e.Message);
-        //     }
-        // }
+        //TODO Need to add HttpPost/id for Editing an order
 
-        // [HttpDelete("{id}")]
-        // public ActionResult<Product> Delete(string id)
-        // {
-        //     try
-        //     {
-        //         var product = _ps.DeleteProduct(id);
-        //         return Ok(product);
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return BadRequest(e.Message);
-        //     }
-        // }
+        [HttpPut("{id}/ship")]
+        public ActionResult<Order> Put(string id, [FromBody] Order orderData)
+        {
+            try
+            {
+                orderData.Id = id;
+                var order = _os.ShipOrder(orderData);
+                return Ok(order);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
+        [HttpPut("{id}/cancel")]
+        public ActionResult<Order> PutCancel(string id, [FromBody] Order orderData)
+        {
+            try
+            {
+                orderData.Id = id;
+                var order = _os.CancelOrder(orderData);
+                return Ok(order);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
 
         public OrdersController(OrdersService os)
