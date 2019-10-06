@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using ZenStore.Models;
@@ -49,6 +50,15 @@ namespace ZenStore.Data
             VALUES (@id, @itemId, @orderId);";
             var x = _db.Execute(sql, new { id, orderId, itemId });
             return x == 1;
+        }
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+            return _db.Query<Order>(@"SELECT * FROM orders o
+            JOIN order_items oi ON o.id = oi.orderid
+            JOIN products p ON p.id = oi.oi.itemid
+            WHERE o.id = @id"
+            );
         }
 
         public OrdersRepository(IDbConnection db)

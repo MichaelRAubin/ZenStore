@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ZenStore.Data;
 using ZenStore.Models;
 
@@ -32,40 +34,30 @@ namespace ZenStore.Services
             return orderData;
 
         }
-        internal Order ShipOrder(string id)
+
+        public List<Order> GetOrders()
         {
-            var order = _repo.GetOrderById(id);
-            if (order.Canceled)
-            {
-                throw new Exception("Order cannot be shipped after canceled");
-            }
-            if (order.OrderOut != null)
-            {
-                throw new Exception("Order Already Shipped");
-            }
-            order.OrderOut = DateTime.Now;
-            order.Shipped = true;
-            _repo.SaveOrder(order);
-            return order;
+            return _repo.GetAllOrders().ToList();
         }
 
-        internal Order CancelOrder(string id)
+
+        internal Order ShipOrder(Order orderData)
         {
-            var order = _repo.GetOrderById(id);
-            if (order.Shipped)
-            {
-                throw new Exception("Order cannot be canceled after shipped");
-            }
-            if (order.OrderCanceledAt != null)
-            {
-                throw new Exception("Order Already Canceled");
-            }
-            order.OrderCanceledAt = DateTime.Now;
-            order.Canceled = true;
-            _repo.SaveOrder(order);
-            return order;
+            var order = _repo.GetAllOrders().Where(o => o.OrderOut == null && !o.Canceled && !o.Shipped).ToList();
+            orderData.OrderOut = DateTime.Now;
+            orderData.Shipped = true;
+            _repo.SaveOrder(orderData);
+            return orderData;
         }
 
+        internal Order CancelOrder(Order orderData)
+        {
+            var order = _repo.GetAllOrders().Where(o => o.OrderOut == null && !o.Canceled && !o.Shipped).ToList();
+            orderData.OrderCanceledAt = DateTime.Now;
+            orderData.Canceled = true;
+            _repo.SaveOrder(orderData);
+            return orderData;
+        }
 
         public OrdersService(OrdersRepository repo)
         {

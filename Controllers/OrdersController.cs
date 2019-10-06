@@ -41,11 +41,11 @@ namespace ZenStore.Controllers
         }
 
         [HttpPut("{id}/ship")]
-        public ActionResult<Order> Put(string id)
+        public ActionResult<Order> PutShip(Order orderData)
         {
             try
             {
-                var order = _os.ShipOrder(id);
+                var order = _os.ShipOrder(orderData);
                 return Ok(order);
             }
             catch (Exception e)
@@ -55,11 +55,11 @@ namespace ZenStore.Controllers
         }
 
         [HttpPut("{id}/cancel")]
-        public ActionResult<Order> PutCancel(string id)
+        public ActionResult<Order> PutCancel(Order orderData)
         {
             try
             {
-                var order = _os.CancelOrder(id);
+                var order = _os.CancelOrder(orderData);
                 return Ok(order);
             }
             catch (Exception e)
