@@ -24,10 +24,10 @@ namespace ZenStore.Data
         {
             var nRows = _db.Execute(@"
             UPDATE orders SET
-            name = @Name
-            canceled = @Canceled
+            name = @Name,
+            canceled = @Canceled,
             shipped = @Shipped,
-            orderout = @OrderOut
+            orderout = @OrderOut,
             ordercanceledat = @OrderCanceledAt
             WHERE id = @Id
             ", Order);
