@@ -26,15 +26,26 @@ namespace ZenStore.Controllers
             }
         }
 
-        //TODO Need to add HttpPost/id for Editing an order
-
-        [HttpPut("{id}/ship")]
-        public ActionResult<Order> Put(string id, [FromBody] Order orderData)
+        [HttpPut("{id}")]
+        public ActionResult<Order> Put(Order orderData)
         {
             try
             {
-                orderData.Id = id;
-                var order = _os.ShipOrder(orderData);
+                Order myOrder = _os.EditOrder(orderData);
+                return Ok(orderData);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut("{id}/ship")]
+        public ActionResult<Order> Put(string id)
+        {
+            try
+            {
+                var order = _os.ShipOrder(id);
                 return Ok(order);
             }
             catch (Exception e)
@@ -44,12 +55,11 @@ namespace ZenStore.Controllers
         }
 
         [HttpPut("{id}/cancel")]
-        public ActionResult<Order> PutCancel(string id, [FromBody] Order orderData)
+        public ActionResult<Order> PutCancel(string id)
         {
             try
             {
-                orderData.Id = id;
-                var order = _os.CancelOrder(orderData);
+                var order = _os.CancelOrder(id);
                 return Ok(order);
             }
             catch (Exception e)
@@ -58,11 +68,9 @@ namespace ZenStore.Controllers
             }
         }
 
-
         public OrdersController(OrdersService os)
         {
             _os = os;
-
         }
     }
 
