@@ -21,7 +21,7 @@ namespace ZenStore.Services
             if (order.Shipped)
             { throw new Exception("Order has been shipped - cannot be edited"); }
             if (order.Canceled)
-            { throw new Exception("Order has been cancelled - cannot be edited"); }
+            { throw new Exception("Order has been canceled - cannot be edited"); }
             orderData.Id = Guid.NewGuid().ToString();
             orderData.OrderIn = DateTime.Now;
             _repo.Create(orderData);
