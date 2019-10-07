@@ -20,9 +20,9 @@ namespace ZenStore.Services
         internal Order EditOrder(Order orderData)
         {
             var order = _repo.GetOrderById(orderData.Id);
-            if (order.Shipped)
+            if (order.Shipped == true)
             { throw new Exception("Order has been shipped - cannot be edited"); }
-            if (order.Canceled)
+            if (order.Canceled == true)
             { throw new Exception("Order has been canceled - cannot be edited"); }
             orderData.Id = Guid.NewGuid().ToString();
             orderData.OrderIn = DateTime.Now;

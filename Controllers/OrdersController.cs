@@ -27,7 +27,7 @@ namespace ZenStore.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Order> Put(Order orderData)
+        public ActionResult<Order> Put(string id, [FromBody] Order orderData)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace ZenStore.Controllers
         }
 
         [HttpPut("{id}/ship")]
-        public ActionResult<Order> PutShip(Order orderData)
+        public ActionResult<Order> PutShip(string id, [FromBody] Order orderData)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace ZenStore.Controllers
         }
 
         [HttpPut("{id}/cancel")]
-        public ActionResult<Order> PutCancel(Order orderData)
+        public ActionResult<Order> PutCancel(string id, [FromBody] Order orderData)
         {
             try
             {
