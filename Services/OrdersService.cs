@@ -17,7 +17,7 @@ namespace ZenStore.Services
             return orderData;
         }
 
-        internal Order EditOrder(Order orderData)
+        public Order EditOrder(Order orderData)
         {
             var order = _repo.GetOrderById(orderData.Id);
             if (order.Shipped == true)
@@ -41,16 +41,20 @@ namespace ZenStore.Services
         }
 
 
-        internal Order ShipOrder(Order orderData)
+        public Order ShipOrder(Order orderData)
         {
-            var order = _repo.GetAllOrders().Where(o => o.OrderOut == null && !o.Canceled && !o.Shipped).ToList();
-            orderData.OrderOut = DateTime.Now;
-            orderData.Shipped = true;
+            var order = _repo.GetOrderById(orderData.Id);
+            if (order.Shipped == true)
+            { throw new Exception("Order has already been shipped"); }
+            if (order.Canceled == true)
+            { throw new Exception("Order has been canceled - cannot be shipped"); }
+            order.OrderOut = DateTime.Now;
+            order.Shipped = true;
             _repo.SaveOrder(orderData);
             return orderData;
         }
 
-        internal Order CancelOrder(Order orderData)
+        public Order CancelOrder(Order orderData)
         {
             var order = _repo.GetAllOrders().Where(o => o.OrderOut == null && !o.Canceled && !o.Shipped).ToList();
             orderData.OrderCanceledAt = DateTime.Now;

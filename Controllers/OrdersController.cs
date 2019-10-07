@@ -45,8 +45,8 @@ namespace ZenStore.Controllers
         {
             try
             {
-                var order = _os.ShipOrder(orderData);
-                return Ok(order);
+                Order myOrder = _os.ShipOrder(orderData);
+                return Ok(orderData);
             }
             catch (Exception e)
             {
@@ -59,8 +59,8 @@ namespace ZenStore.Controllers
         {
             try
             {
-                var order = _os.CancelOrder(orderData);
-                return Ok(order);
+                Order myOrder = _os.CancelOrder(orderData);
+                return Ok(orderData);
             }
             catch (Exception e)
             {
