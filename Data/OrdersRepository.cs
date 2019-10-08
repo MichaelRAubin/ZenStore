@@ -38,12 +38,9 @@ namespace ZenStore.Data
         public Order GetOrderById(string id)
         {
             return _db.QueryFirstOrDefault<Order>(@"
-            SELECT o.id, p.* FROM order_items oi
-               JOIN order_items oi ON o.id = oi.orderid
-               JOIN products p ON p.id = oi.itemid
-               WHERE o.id = @id",
+            SELECT * FROM orders 
+               WHERE id = @id",
                new { id }
-
             );
         }
 
@@ -64,10 +61,18 @@ namespace ZenStore.Data
             WHERE o.id = @id"
             );
         }
+        internal List<Product> getOrderProducts(string orderId)
+        {
+            var sql = @"SELECT * FROM order_items oi
+            JOIN products p ON p.id = oi.itemid
+            WHERE oi.orderid = @orderId";
+            return _db.Query<Product>(sql, new { orderId }).AsList();
+        }
 
         public OrdersRepository(IDbConnection db)
         {
             _db = db;
         }
+
     }
 }

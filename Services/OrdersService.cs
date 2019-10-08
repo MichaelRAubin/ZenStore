@@ -13,6 +13,7 @@ namespace ZenStore.Services
         internal Order AddOrder(Order orderData)
         {
             orderData.Id = Guid.NewGuid().ToString();
+            orderData.OrderIn = DateTime.Now;
             _repo.Create(orderData);
             return orderData;
         }
@@ -24,14 +25,14 @@ namespace ZenStore.Services
             { throw new Exception("Order has been shipped - cannot be edited"); }
             if (order.Canceled == true)
             { throw new Exception("Order has been canceled - cannot be edited"); }
-            orderData.Id = Guid.NewGuid().ToString();
-            orderData.OrderIn = DateTime.Now;
-            _repo.Create(orderData);
+            order.Name = orderData.Name;
+            order.Products = orderData.Products;
             orderData.Products.ForEach(item =>
             {
                 _repo.CreateOrderItem(orderData.Id, item.Id);
             });
-            return orderData;
+            order.Products = _repo.getOrderProducts(order.Id);
+            return order;
 
         }
 
@@ -41,26 +42,34 @@ namespace ZenStore.Services
         }
 
 
-        public Order ShipOrder(Order orderData)
+        public Order ShipOrder(string id)
         {
-            var order = _repo.GetOrderById(orderData.Id);
+            var order = _repo.GetOrderById(id);
             if (order.Shipped == true)
             { throw new Exception("Order has already been shipped"); }
             if (order.Canceled == true)
             { throw new Exception("Order has been canceled - cannot be shipped"); }
             order.OrderOut = DateTime.Now;
             order.Shipped = true;
-            _repo.SaveOrder(orderData);
-            return orderData;
+            _repo.SaveOrder(order);
+            order.Products = _repo.getOrderProducts(order.Id);
+
+            return order;
         }
 
-        public Order CancelOrder(Order orderData)
+        public Order CancelOrder(string id)
         {
-            var order = _repo.GetAllOrders().Where(o => o.OrderOut == null && !o.Canceled && !o.Shipped).ToList();
-            orderData.OrderCanceledAt = DateTime.Now;
-            orderData.Canceled = true;
-            _repo.SaveOrder(orderData);
-            return orderData;
+            var order = _repo.GetOrderById(id);
+            if (order.Shipped == true)
+            { throw new Exception("Order has already been shipped"); }
+            if (order.Canceled == true)
+            { throw new Exception("Order has already been canceled"); }
+            order.OrderCanceledAt = DateTime.Now;
+            order.Canceled = true;
+            _repo.SaveOrder(order);
+            order.Products = _repo.getOrderProducts(order.Id);
+
+            return order;
         }
 
         public OrdersService(OrdersRepository repo)

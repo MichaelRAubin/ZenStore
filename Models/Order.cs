@@ -9,11 +9,11 @@ namespace ZenStore.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public List<Product> Products { get; set; }
+        public List<Product> Products { get; set; } = new List<Product>();
         public bool Canceled { get; set; }
         public bool Shipped { get; set; }
         public decimal Total { get { return Products.Sum(p => p.Price); } }
-        public DateTime OrderIn { get; set; }
+        public DateTime? OrderIn { get; set; }
         public DateTime? OrderOut { get; set; }
         public DateTime? OrderCanceledAt { get; set; }
 

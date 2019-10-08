@@ -32,7 +32,7 @@ namespace ZenStore.Controllers
             try
             {
                 Order myOrder = _os.EditOrder(orderData);
-                return Ok(orderData);
+                return Ok(myOrder);
             }
             catch (Exception e)
             {
@@ -41,12 +41,12 @@ namespace ZenStore.Controllers
         }
 
         [HttpPut("{id}/ship")]
-        public ActionResult<Order> PutShip(string id, [FromBody] Order orderData)
+        public ActionResult<Order> PutShip(string id)
         {
             try
             {
-                Order myOrder = _os.ShipOrder(orderData);
-                return Ok(orderData);
+                Order myOrder = _os.ShipOrder(id);
+                return Ok(myOrder);
             }
             catch (Exception e)
             {
@@ -55,12 +55,12 @@ namespace ZenStore.Controllers
         }
 
         [HttpPut("{id}/cancel")]
-        public ActionResult<Order> PutCancel(string id, [FromBody] Order orderData)
+        public ActionResult<Order> PutCancel(string id)
         {
             try
             {
-                Order myOrder = _os.CancelOrder(orderData);
-                return Ok(orderData);
+                Order myOrder = _os.CancelOrder(id);
+                return Ok(myOrder);
             }
             catch (Exception e)
             {

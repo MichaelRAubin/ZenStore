@@ -13,7 +13,7 @@ namespace ZenStore.Interfaces
         bool Canceled { get; set; }
         bool Shipped { get; set; }
         //decimal Total { get { return Products.Sum(p => p.Price); } }
-        DateTime OrderIn { get; set; }
+        DateTime? OrderIn { get; set; }
         DateTime? OrderOut { get; set; }
         DateTime? OrderCanceledAt { get; set; }
     }

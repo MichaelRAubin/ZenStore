@@ -1,0 +1,8 @@
+return _db.QueryFirstOrDefault<Order>(@"
+            SELECT o.id, p.* FROM order_items oi
+               JOIN order_items oi ON o.id = oi.orderid
+               JOIN products p ON p.id = oi.itemid
+               WHERE o.id = @id",
+               new { id }
+
+            );
